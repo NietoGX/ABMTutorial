@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
 import {setPropsAsInitial} from "../helpers/setPropsAsInitial";
 import CustomersActions from "./CustomersActions";
+import {Prompt} from "react-router";
+
 
 const MyField = ({input, meta}) => (
     <div>
@@ -13,9 +15,10 @@ const MyField = ({input, meta}) => (
 
     </div>
 );
-// const isRequired = value => (
-//     !value && "Este campo es requerido"
-// );
+const toNumber = value => value && Number(value);
+const toUpper = value => value && value.toUpperCase();
+const toLower = value =>  value && value.toLowerCase();
+const onlyGrow =  (value, previousValue, values) => value && (!previousValue ? value :  (value>previousValue ? value :previousValue));
 const validate = values => {
     const error = {};
 
@@ -27,42 +30,43 @@ const validate = values => {
     }
     return error;
 }
-const CustomerEdit = ({name, dni, age, handleSubmit, submitting, onBack}) => {
+const CustomerEdit = ({name, dni, age, handleSubmit, submitting, onBack, pristine, submitSucceeded}) => {
     return (
         <div>
             <h2>Edición de cliente</h2>
             <form onSubmit={handleSubmit}>
-                <div><label htmlFor="name">Nombre: </label>
                     <Field
                         name="name"
+                        label="Nombre"
                         component={MyField}
-                        type="text">
-
+                        parse={toUpper}
+                        format={toLower}
+                    >
                     </Field>
-                </div>
-
-                <div><label htmlFor="dni">Dni: </label>
                     <Field
                         name="dni"
                         component={MyField}
-                        type="text">
-
+                        label="DNI"
+                        >
                     </Field>
-
-                </div>
-
-                <div><label htmlFor="age">Edad: </label>
                     <Field
+                        label= "edad"
                         name="age"
                         component={MyField}
-                        type="number">
+                        type="number"
+                        parse={toNumber}
+                        normalize = {onlyGrow}>
 
                     </Field>
                 <CustomersActions>
-                    <button type="submit" disabled={submitting}>Aceptar</button>
-                    <button onClick={onBack}>Cancelar</button>
+                    <button type="submit" disabled={pristine || submitting}>Aceptar</button>
+                    <button disabled={submitting} onClick={onBack}>Cancelar</button>
                 </CustomersActions>
-                </div>
+            <Prompt>
+                when= {!pristine && !submitSucceeded}
+                message= "Se perderán los datos si continúa"
+            </Prompt>
+
             </form>
         </div>
     );

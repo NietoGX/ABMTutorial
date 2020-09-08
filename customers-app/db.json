@@ -1,24 +1,90 @@
 {
-  "customers":[
-
-  {
-    "dni" : "123",
-    "name" : "david",
-    "age" : "12"
-  },
-  {
-    "dni" : "1234",
-    "name" : "david2",
-    "age" : "124"
-  },
-  {
-    "dni" : "1235",
-    "name" : "david3",
-    "age" : "123"
-  }
-
-
-],
+  "customers": [
+    {
+      "id": "30000001",
+      "dni": "30000001",
+      "name": "FACUNDO 4",
+      "age": 30555
+    },
+    {
+      "id": "500000",
+      "dni": "500000",
+      "name": "CARLOS SANCHES",
+      "age": 40
+    },
+    {
+      "dni": "6868686",
+      "name": "Nuevo cliente",
+      "age": 10,
+      "id": "XSCfaW5"
+    },
+    {
+      "name": "NUEVO CLIENTE 1",
+      "dni": "99999",
+      "age": 11,
+      "id": "kxmVQVd"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "OQmP5NG"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "fxZ_qBl"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "m9EC1_U"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "saeDwel"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "6JfB4vD"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "LxQsUGV"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "OFM4QFX"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "ZXtI2LQ"
+    },
+    {
+      "name": "DAVID",
+      "dni": "537",
+      "age": 123,
+      "id": "6X_5g9q"
+    },
+    {
+      "name": "PEPE",
+      "dni": "123",
+      "age": 12,
+      "id": "VyyuVBS"
+    }
+  ],
   "posts": [
     {
       "id": 1,

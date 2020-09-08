@@ -8,6 +8,8 @@ import CustomerEdit from "../CustomerEdit";
 import CustomerData from "../CustomerData";
 import {withRouter} from "react-router";
 import {fetchCustomers} from "../../actions/fetchCustomers";
+import {updateCustomer} from "../../actions/updateCustomer";
+
 
 
 
@@ -21,9 +23,15 @@ class CustomerContainer extends Component {
 
     handleSubmit = values => {
         console.log(JSON.stringify(values));
+        const {id} = values;
+        return this.props.updateCustomer(id,values)
+
 
     }
+    handleOnSubmitSuccess = () => {
+        this.props.history.goBack();
 
+    }
     handleOnBack= () => {
         this.props.history.goBack();
     }
@@ -35,6 +43,7 @@ class CustomerContainer extends Component {
                 return <CustomerControl {...this.props.customer}
                                         onSubmit={this.handleSubmit}
                                         onBack={this.handleOnBack}
+                                        onSubmitSuccess={this.handleOnSubmitSuccess}
                 />
 
 
@@ -57,9 +66,10 @@ CustomerContainer.propTypes = {
     dni: PropTypes.string.isRequired,
     customer: PropTypes.object.isRequired,
     fetchCustomer: PropTypes.func.isRequired,
+    updateCustomer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
     customer: getCustomerByDni(state, props)
 });
-export default withRouter(connect(mapStateToProps, {fetchCustomers})(CustomerContainer));
+export default withRouter(connect(mapStateToProps, {fetchCustomers, updateCustomer})(CustomerContainer));
