@@ -6,16 +6,36 @@ import {getCustomerByDni} from "../../selectors/customers";
 import {Route} from 'react-router-dom';
 import CustomerEdit from "../CustomerEdit";
 import CustomerData from "../CustomerData";
+import {withRouter} from "react-router";
+import {fetchCustomers} from "../../actions/fetchCustomers";
+
 
 
 class CustomerContainer extends Component {
     //<p>Datos del cliente {this.props.customer.name} </p>
+    componentDidMount() {
+        if(!this.props.customer){
+            this.props.fetchCustomers();
+        }
+    }
+
+    handleSubmit = values => {
+        console.log(JSON.stringify(values));
+
+    }
+
+    handleOnBack= () => {
+        this.props.history.goBack();
+    }
     renderBody = () => (
         <Route path="/customer/:dni/edit" children={
             ({match}) => {
                 const CustomerControl = match ? CustomerEdit : CustomerData;
 
-                return <CustomerControl {...this.props.customer}/>
+                return <CustomerControl {...this.props.customer}
+                                        onSubmit={this.handleSubmit}
+                                        onBack={this.handleOnBack}
+                />
 
 
             }}/>
@@ -36,9 +56,10 @@ class CustomerContainer extends Component {
 CustomerContainer.propTypes = {
     dni: PropTypes.string.isRequired,
     customer: PropTypes.object.isRequired,
+    fetchCustomer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, props) => ({
     customer: getCustomerByDni(state, props)
 });
-export default connect(mapStateToProps, null)(CustomerContainer);
+export default withRouter(connect(mapStateToProps, {fetchCustomers})(CustomerContainer));
