@@ -9,9 +9,11 @@ import {insertCustomer} from "../../actions/insertCustomer";
 class NewCustomerContainer extends Component {
     handleSubmit = values => {
         return this.props.insertCustomer(values);
+        console.log("RATATA ENVIAO")
     }
     handleOnSubmitSuccess = () => {
         this.props.history.goBack();
+        console.log("RATATA SUCCESS")
     }
     handleOnBack = () => {
         this.props.history.goBack();

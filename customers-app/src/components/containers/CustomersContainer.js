@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../AppFrame';
 import {connect} from 'react-redux'
@@ -10,10 +10,12 @@ import {getCustomers} from "../../selectors/customers";
 
 class CustomersContainer extends Component {
     componentDidMount() {
-        this.props.fetchCustomers();
+        if (this.props.customers.length === 0) {
+            this.props.fetchCustomers();
+        }
     }
 
-    handleAddNew= () => {
+    handleAddNew = () => {
         this.props.history.push('/customers/new')
     };
 
@@ -25,14 +27,14 @@ class CustomersContainer extends Component {
             </CustomersActions>
         </div>
     );
-        
-    
+
+
     render() {
         return (
             <div>
-                <AppFrame 
+                <AppFrame
                     header={"Listado de clientes"}
-                    body={ this.renderBody(this.props.customers)}>
+                    body={this.renderBody(this.props.customers)}>
                 </AppFrame>
             </div>
         );
@@ -47,11 +49,10 @@ CustomersContainer.propTypes = {
 };
 
 CustomersContainer.defaultProps = {
-    customers :[
-    ]
+    customers: []
 }
 
-const mapStateToProps =  state => ({
+const mapStateToProps = state => ({
     customers: getCustomers(state)
 });
 const mapDispatchToProps = {fetchCustomers};
