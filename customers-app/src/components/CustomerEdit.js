@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Field, reduxForm} from 'redux-form';
 import {setPropsAsInitial} from "../helpers/setPropsAsInitial";
@@ -6,19 +6,11 @@ import CustomersActions from "./CustomersActions";
 import {Prompt} from "react-router";
 
 
-const MyField = ({input, meta}) => (
-    <div>
-        <input {...input} type="text"/>
-        {
-            meta.touched && meta.error && <span>{meta.error}</span>
-        }
 
-    </div>
-);
 const toNumber = value => value && Number(value);
 const toUpper = value => value && value.toUpperCase();
-const toLower = value =>  value && value.toLowerCase();
-const onlyGrow =  (value, previousValue, values) => value && (!previousValue ? value :  (value>previousValue ? value :previousValue));
+const toLower = value => value && value.toLowerCase();
+const onlyGrow = (value, previousValue, values) => value && (!previousValue ? value : (value > previousValue ? value : previousValue));
 const validate = values => {
     const error = {};
 
@@ -30,47 +22,69 @@ const validate = values => {
     }
     return error;
 }
-const CustomerEdit = ({name, dni, age, handleSubmit, submitting, onBack, pristine, submitSucceeded}) => {
-    return (
+
+class CustomerEdit extends Component {
+    componentDidMount() {
+        if(this.txt){
+        }
+    };
+    renderField = ({input, meta, type, label, name, withFocus}) => (
         <div>
-            <h2>Edición de cliente</h2>
-            <form onSubmit={handleSubmit}>
+            <label htmlFor={name}>{label}</label>
+            <input {...input}
+                   type={!type ? "text" : type}
+                   ref={withFocus && (txt => this.txt = txt)}
+            />
+            {
+                meta.touched && meta.error && <span>{meta.error}</span>
+            }
+
+        </div>
+    );
+    render() {
+        const {handleSubmit, submitting, onBack, pristine, submitSucceeded} = this.props;
+        return (
+            <div>
+                <h2>Edición de cliente</h2>
+                <form onSubmit={handleSubmit}>
                     <Field
+                        withFocus
                         name="name"
                         label="Nombre"
-                        component={MyField}
+                        component={this.renderField}
                         parse={toUpper}
                         format={toLower}
                     >
                     </Field>
                     <Field
                         name="dni"
-                        component={MyField}
+                        component={this.renderField}
                         label="DNI"
-                        >
+                    >
                     </Field>
                     <Field
-                        label= "edad"
+                        label="edad"
                         name="age"
-                        component={MyField}
+                        component={this.renderField}
                         type="number"
                         parse={toNumber}
-                        normalize = {onlyGrow}>
+                        normalize={onlyGrow}>
 
                     </Field>
-                <CustomersActions>
-                    <button type="submit" disabled={pristine || submitting}>Aceptar</button>
-                    <button disabled={submitting} onClick={onBack}>Cancelar</button>
-                </CustomersActions>
-            <Prompt>
-                when= {!pristine && !submitSucceeded}
-                message= "Se perderán los datos si continúa"
-            </Prompt>
+                    <CustomersActions>
+                        <button type="submit" disabled={pristine || submitting}>Aceptar</button>
+                        <button disabled={submitting} onClick={onBack}>Cancelar</button>
+                    </CustomersActions>
+                    <Prompt>
+                        when= {!pristine && !submitSucceeded}
+                        message= "Se perderán los datos si continúa"
+                    </Prompt>
 
-            </form>
-        </div>
-    );
-};
+                </form>
+            </div>
+        );
+    }
+}
 
 CustomerEdit.propTypes = {
     name: PropTypes.string,
